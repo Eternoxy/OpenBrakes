@@ -6,8 +6,6 @@
 #include "HallSensor.h"
 #include <xiaobattery.h>
 
-
-
 #define UUID128_SVC_SENSOR   "06633474-1e8e-43aa-a85f-02f8c2814fb2"
 #define UUID128_CHR_THERMAL  "a5bfea66-efec-4808-b472-2ac3d0c5a0ef"
 #define UUID128_CHR_STRAIN   "0ec3dcce-9610-4d0b-9a66-338ca2097fa0"
