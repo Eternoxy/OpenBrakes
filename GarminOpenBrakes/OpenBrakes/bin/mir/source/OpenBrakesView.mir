@@ -1,0 +1,300 @@
+[ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc"; @line = 1; ]
+import Toybox.Activity;
+[ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc"; @line = 2; ]
+import Toybox.Graphics;
+[ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc"; @line = 3; ]
+import Toybox.Lang;
+[ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc"; @line = 4; ]
+import Toybox.WatchUi;
+[ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc"; @line = 6; ]
+class OpenBrakesView extends WatchUi.DataField{
+    [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc"; @line = 6; ]
+    <init> {
+    }
+    [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc"; @line = 6; ]
+    static
+    <init> {
+    }
+    [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc"; @line = 8; @position = 15; ]
+    protected
+    var mValue as Numeric;
+    [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc"; @line = 10; ]
+    function initialize() as Void {
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_10_26_start:
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 11 8 ]
+        %tmp.2 = getv ? :DataField;
+        %tmp.3 = getv function %tmp.2 :initialize;
+        invoke %tmp.2 %tmp.3();
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 12 8 ]
+        %tmp.4 = 0.0f;
+        putv self :mValue %tmp.4;
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_10_26_stop:
+    }
+    [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc"; @line = 17; ]
+    function onLayout(dc as Dc) as Void {
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_17_40_start:
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 18 8 ]
+        [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_17_40_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_17_40_stop" ]
+        %obscurityFlags.1 = local;
+        %tmp.2 = getv ? :DataField;
+        %tmp.3 = getv function %tmp.2 :getObscurityFlags;
+        %tmp.4 = invoke %tmp.2 %tmp.3();
+        lputv %obscurityFlags.1 %tmp.4;
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 21 8 ]
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_21_8_if_stmt:
+        %tmp.6 = lgetv %obscurityFlags.1;
+        %tmp.8 = getv ? :OBSCURE_TOP;
+        %tmp.10 = getv ? :OBSCURE_LEFT;
+        %tmp.11 = bitor %tmp.8 %tmp.10;
+        %tmp.12 = eq %tmp.6 %tmp.11;
+        bf %tmp.12 @C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_21_8_if_false;
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_21_8_if_true:
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_21_60_start:
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 22 12 ]
+        %tmp.14 = getv ? :View;
+        %tmp.15 = getv function %tmp.14 :setLayout;
+        %tmp.17 = getv ? :Rez;
+        %tmp.18 = getv %tmp.17 :Layouts;
+        %tmp.19 = getv function %tmp.18 :TopLeftLayout;
+        %tmp.21 = lgetv %dc;
+        %tmp.22 = invoke %tmp.18 %tmp.19(%tmp.21);
+        invoke %tmp.14 %tmp.15(%tmp.22);
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_21_60_stop:
+        goto @C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_21_8_if_end;
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_21_8_if_false:
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 25 15 ]
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_25_15_if_stmt:
+        %tmp.24 = lgetv %obscurityFlags.1;
+        %tmp.26 = getv ? :OBSCURE_TOP;
+        %tmp.28 = getv ? :OBSCURE_RIGHT;
+        %tmp.29 = bitor %tmp.26 %tmp.28;
+        %tmp.30 = eq %tmp.24 %tmp.29;
+        bf %tmp.30 @C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_25_15_if_false;
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_25_15_if_true:
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_25_68_start:
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 26 12 ]
+        %tmp.32 = getv ? :View;
+        %tmp.33 = getv function %tmp.32 :setLayout;
+        %tmp.35 = getv ? :Rez;
+        %tmp.36 = getv %tmp.35 :Layouts;
+        %tmp.37 = getv function %tmp.36 :TopRightLayout;
+        %tmp.39 = lgetv %dc;
+        %tmp.40 = invoke %tmp.36 %tmp.37(%tmp.39);
+        invoke %tmp.32 %tmp.33(%tmp.40);
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_25_68_stop:
+        goto @C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_25_15_if_end;
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_25_15_if_false:
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 29 15 ]
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_29_15_if_stmt:
+        %tmp.42 = lgetv %obscurityFlags.1;
+        %tmp.44 = getv ? :OBSCURE_BOTTOM;
+        %tmp.46 = getv ? :OBSCURE_LEFT;
+        %tmp.47 = bitor %tmp.44 %tmp.46;
+        %tmp.48 = eq %tmp.42 %tmp.47;
+        bf %tmp.48 @C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_29_15_if_false;
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_29_15_if_true:
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_29_70_start:
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 30 12 ]
+        %tmp.50 = getv ? :View;
+        %tmp.51 = getv function %tmp.50 :setLayout;
+        %tmp.53 = getv ? :Rez;
+        %tmp.54 = getv %tmp.53 :Layouts;
+        %tmp.55 = getv function %tmp.54 :BottomLeftLayout;
+        %tmp.57 = lgetv %dc;
+        %tmp.58 = invoke %tmp.54 %tmp.55(%tmp.57);
+        invoke %tmp.50 %tmp.51(%tmp.58);
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_29_70_stop:
+        goto @C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_29_15_if_end;
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_29_15_if_false:
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 33 15 ]
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_33_15_if_stmt:
+        %tmp.60 = lgetv %obscurityFlags.1;
+        %tmp.62 = getv ? :OBSCURE_BOTTOM;
+        %tmp.64 = getv ? :OBSCURE_RIGHT;
+        %tmp.65 = bitor %tmp.62 %tmp.64;
+        %tmp.66 = eq %tmp.60 %tmp.65;
+        bf %tmp.66 @C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_33_15_if_false;
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_33_15_if_true:
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_33_71_start:
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 34 12 ]
+        %tmp.68 = getv ? :View;
+        %tmp.69 = getv function %tmp.68 :setLayout;
+        %tmp.71 = getv ? :Rez;
+        %tmp.72 = getv %tmp.71 :Layouts;
+        %tmp.73 = getv function %tmp.72 :BottomRightLayout;
+        %tmp.75 = lgetv %dc;
+        %tmp.76 = invoke %tmp.72 %tmp.73(%tmp.75);
+        invoke %tmp.68 %tmp.69(%tmp.76);
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_33_71_stop:
+        goto @C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_33_15_if_end;
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_33_15_if_false:
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_37_15_start:
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 38 12 ]
+        %tmp.78 = getv ? :View;
+        %tmp.79 = getv function %tmp.78 :setLayout;
+        %tmp.81 = getv ? :Rez;
+        %tmp.82 = getv %tmp.81 :Layouts;
+        %tmp.83 = getv function %tmp.82 :MainLayout;
+        %tmp.85 = lgetv %dc;
+        %tmp.86 = invoke %tmp.82 %tmp.83(%tmp.85);
+        invoke %tmp.78 %tmp.79(%tmp.86);
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 39 12 ]
+        [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_37_15_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_37_15_stop" ]
+        %labelView.2 = local;
+        %tmp.88 = getv ? :View;
+        %tmp.89 = getv function %tmp.88 :findDrawableById;
+        %tmp.90 = "label";
+        %tmp.91 = invoke %tmp.88 %tmp.89(%tmp.90);
+        lputv %labelView.2 %tmp.91;
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 40 12 ]
+        %tmp.92 = lgetv %labelView.2;
+        %tmp.93 = lgetv %labelView.2;
+        %tmp.94 = getv %tmp.93 :locY;
+        %tmp.95 = 16;
+        %tmp.96 = sub %tmp.94 %tmp.95;
+        putv %tmp.92 :locY %tmp.96;
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 41 12 ]
+        [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_37_15_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_37_15_stop" ]
+        %valueView.3 = local;
+        %tmp.98 = getv ? :View;
+        %tmp.99 = getv function %tmp.98 :findDrawableById;
+        %tmp.100 = "value";
+        %tmp.101 = invoke %tmp.98 %tmp.99(%tmp.100);
+        lputv %valueView.3 %tmp.101;
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 42 12 ]
+        %tmp.102 = lgetv %valueView.3;
+        %tmp.103 = lgetv %valueView.3;
+        %tmp.104 = getv %tmp.103 :locY;
+        %tmp.105 = 7;
+        %tmp.106 = add %tmp.104 %tmp.105;
+        putv %tmp.102 :locY %tmp.106;
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_37_15_stop:
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_33_15_if_end:
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_29_15_if_end:
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_25_15_if_end:
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_21_8_if_end:
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 45 8 ]
+        %tmp.108 = getv ? :View;
+        %tmp.109 = getv function %tmp.108 :findDrawableById;
+        %tmp.110 = "label";
+        %tmp.111 = invoke %tmp.108 %tmp.109(%tmp.110);
+        %tmp.112 = as %tmp.111 Text;
+        %tmp.113 = getv function %tmp.112 :setText;
+        %tmp.115 = getv ? :Rez;
+        %tmp.116 = getv %tmp.115 :Strings;
+        %tmp.117 = getv %tmp.116 :label;
+        invoke %tmp.112 %tmp.113(%tmp.117);
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_17_40_stop:
+    }
+    [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc"; @line = 52; ]
+    function compute(info as Activity.Info) as Void {
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_52_52_start:
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 54 8 ]
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_54_8_if_stmt:
+        %tmp.2 = lgetv %info;
+        %tmp.4 = const :currentHeartRate;
+        %tmp.5 = canhazplz %tmp.2 %tmp.4;
+        bf %tmp.5 @C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_54_8_if_end;
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_54_8_if_true:
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_54_38_start:
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 55 12 ]
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_55_12_if_stmt:
+        %tmp.6 = lgetv %info;
+        %tmp.7 = as %tmp.6 { (interface { var currentHeartRate; }) };
+        %tmp.8 = getv %tmp.7 :currentHeartRate;
+        %tmp.9 = null;
+        %tmp.10 = ne %tmp.8 %tmp.9;
+        bf %tmp.10 @C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_55_12_if_false;
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_55_12_if_true:
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_55_45_start:
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 56 16 ]
+        %tmp.11 = lgetv %info;
+        %tmp.12 = as %tmp.11 { (interface { var currentHeartRate; }) };
+        %tmp.13 = getv %tmp.12 :currentHeartRate;
+        %tmp.14 = as %tmp.13 Number;
+        putv self :mValue %tmp.14;
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_55_45_stop:
+        goto @C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_55_12_if_end;
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_55_12_if_false:
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_57_19_start:
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 58 16 ]
+        %tmp.15 = 0.0f;
+        putv self :mValue %tmp.15;
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_57_19_stop:
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_55_12_if_end:
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_54_38_stop:
+        goto @C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_54_8_if_end;
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_54_8_if_end:
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_52_52_stop:
+    }
+    [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc"; @line = 65; ]
+    function onUpdate(dc as Dc) as Void {
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_65_40_start:
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 67 8 ]
+        %tmp.2 = getv ? :View;
+        %tmp.3 = getv function %tmp.2 :findDrawableById;
+        %tmp.4 = "Background";
+        %tmp.5 = invoke %tmp.2 %tmp.3(%tmp.4);
+        %tmp.6 = as %tmp.5 Text;
+        %tmp.7 = getv function %tmp.6 :setColor;
+        %tmp.8 = self;
+        %tmp.9 = getv function %tmp.8 :getBackgroundColor;
+        %tmp.10 = invoke %tmp.8 %tmp.9();
+        invoke %tmp.6 %tmp.7(%tmp.10);
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 70 8 ]
+        [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_65_40_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_65_40_stop" ]
+        %value.1 = local;
+        %tmp.12 = getv ? :View;
+        %tmp.13 = getv function %tmp.12 :findDrawableById;
+        %tmp.14 = "value";
+        %tmp.15 = invoke %tmp.12 %tmp.13(%tmp.14);
+        %tmp.16 = as %tmp.15 Text;
+        lputv %value.1 %tmp.16;
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 71 8 ]
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_71_8_if_stmt:
+        %tmp.17 = self;
+        %tmp.18 = getv function %tmp.17 :getBackgroundColor;
+        %tmp.19 = invoke %tmp.17 %tmp.18();
+        %tmp.20 = getm $.Toybox.Graphics;
+        %tmp.21 = getv %tmp.20 :COLOR_BLACK;
+        %tmp.22 = eq %tmp.19 %tmp.21;
+        bf %tmp.22 @C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_71_8_if_false;
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_71_8_if_true:
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_71_58_start:
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 72 12 ]
+        %tmp.23 = lgetv %value.1;
+        %tmp.24 = getv function %tmp.23 :setColor;
+        %tmp.25 = getm $.Toybox.Graphics;
+        %tmp.26 = getv %tmp.25 :COLOR_WHITE;
+        invoke %tmp.23 %tmp.24(%tmp.26);
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_71_58_stop:
+        goto @C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_71_8_if_end;
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_71_8_if_false:
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_73_15_start:
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 74 12 ]
+        %tmp.27 = lgetv %value.1;
+        %tmp.28 = getv function %tmp.27 :setColor;
+        %tmp.29 = getm $.Toybox.Graphics;
+        %tmp.30 = getv %tmp.29 :COLOR_BLACK;
+        invoke %tmp.27 %tmp.28(%tmp.30);
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_73_15_stop:
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_71_8_if_end:
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 76 8 ]
+        %tmp.31 = lgetv %value.1;
+        %tmp.32 = getv function %tmp.31 :setText;
+        %tmp.34 = getv ? :mValue;
+        %tmp.35 = getv function %tmp.34 :format;
+        %tmp.36 = "%.2f";
+        %tmp.37 = invoke %tmp.34 %tmp.35(%tmp.36);
+        invoke %tmp.31 %tmp.32(%tmp.37);
+[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc" 79 8 ]
+        %tmp.39 = getv ? :View;
+        %tmp.40 = getv function %tmp.39 :onUpdate;
+        %tmp.42 = lgetv %dc;
+        invoke %tmp.39 %tmp.40(%tmp.42);
+C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_source_OpenBrakesView_mc_65_40_stop:
+    }
+}
+[ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\source\OpenBrakesView.mc"; @line = 1; ]
+<init> {
+}
