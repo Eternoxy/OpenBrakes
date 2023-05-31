@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include "sensors.h"
-#include <bluefruit.h>
+#include "bluefruit.h"
 #include "StrainGaugeSensor.h"
 #include "MLX90614Sensor.h"
 #include "HallSensor.h"
@@ -227,8 +227,9 @@ void loop() {
   }
   }
   if (currentMillis - lastBatteryMillis >= batteryInterval) {
-    //blebas.notify(map(battery.GetBatteryVoltage(),3.0,4.2,0,100));
-    blebas.notify(50);
+    blebas.notify(uint((battery.GetBatteryVoltage()-3.2)*100));
+    Serial.print(uint8_t((battery.GetBatteryVoltage()-3.2)*100));
+    //blebas.notify(50);
     lastBatteryMillis = currentMillis;
   }  
 }

@@ -1,68 +1,68 @@
-[ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 1; ]
+[ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 1; ]
 import Toybox.Lang;
-[ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 2; ]
+[ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 2; ]
 using Toybox.WatchUi;
-[ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 3; ]
+[ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 3; ]
 using Toybox.WatchUi as :Ui;
-[ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 4; ]
+[ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 4; ]
 using Toybox.Graphics;
-[ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 5; ]
+[ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 5; ]
 using Toybox.Graphics as :Gfx;
-[ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 7; ]
+[ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 7; ]
 module Rez {
-    [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 7; ]
+    [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 7; ]
     <init> {
     }
-    [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 8; ]
+    [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 8; ]
     module Drawables {
-        [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 8; ]
+        [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 8; ]
         <init> {
         }
-        [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 9; @position = 27; initialized = true; ]
+        [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 9; @position = 27; initialized = true; ]
         var LauncherIcon as Symbol;
     }
-    [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 12; ]
+    [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 12; ]
     module Fonts {
-        [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 12; ]
+        [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 12; ]
         <init> {
         }
     }
-    [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 15; ]
+    [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 15; ]
     module JsonData {
-        [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 15; ]
+        [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 15; ]
         <init> {
         }
     }
-    [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 18; ]
+    [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 18; ]
     module Layouts {
-        [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 18; ]
+        [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 18; ]
         <init> {
         }
-        [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 19; ]
+        [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 19; ]
         function MainLayout(dc as Graphics.Dc) as Array<WatchUi.Drawable> {
-C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_start:
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 20 12 ]
-            [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_stop" ]
+D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_start:
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 20 12 ]
+            [ "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_start" "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_stop" ]
             %rez_cmp_local_var_dc_getHeight.1 = local;
             %tmp.1 = lgetv %dc;
             %tmp.2 = getv function %tmp.1 :getHeight;
             %tmp.3 = invoke %tmp.1 %tmp.2();
             lputv %rez_cmp_local_var_dc_getHeight.1 %tmp.3;
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 22 12 ]
-            [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_stop" ]
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 22 12 ]
+            [ "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_start" "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_stop" ]
             %rez_cmp_local_var_dc_getWidth.2 = local;
             %tmp.4 = lgetv %dc;
             %tmp.5 = getv function %tmp.4 :getWidth;
             %tmp.6 = invoke %tmp.4 %tmp.5();
             lputv %rez_cmp_local_var_dc_getWidth.2 %tmp.6;
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 24 12 ]
-            [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_stop" ]
-            %rez_cmp_local_custom_drawable_91035507979172637365.3 = local;
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 24 12 ]
+            [ "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_start" "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_stop" ]
+            %rez_cmp_local_custom_drawable_14118945995970371952.3 = local;
             %tmp.10 = getv ? :Background;
             %tmp.7 = newc %tmp.10 ();
-            lputv %rez_cmp_local_custom_drawable_91035507979172637365.3 %tmp.7;
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 26 12 ]
-            [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_stop" ]
+            lputv %rez_cmp_local_custom_drawable_14118945995970371952.3 %tmp.7;
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 26 12 ]
+            [ "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_start" "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_stop" ]
             %rez_cmp_local_text_label.4 = local;
             %tmp.13 = getm $.Toybox.WatchUi;
             %tmp.14 = getv function ? %tmp.13 :Text;
@@ -106,8 +106,8 @@ C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_
             %tmp.60 = aputv %tmp.59 %tmp.56 %tmp.58;
             %tmp.11 = newc %tmp.14 (%tmp.60);
             lputv %rez_cmp_local_text_label.4 %tmp.11;
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 28 12 ]
-            [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_stop" ]
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 28 12 ]
+            [ "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_start" "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_stop" ]
             %rez_cmp_local_text_value.5 = local;
             %tmp.63 = getm $.Toybox.WatchUi;
             %tmp.64 = getv function ? %tmp.63 :Text;
@@ -151,9 +151,9 @@ C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_
             %tmp.110 = aputv %tmp.109 %tmp.106 %tmp.108;
             %tmp.61 = newc %tmp.64 (%tmp.110);
             lputv %rez_cmp_local_text_value.5 %tmp.61;
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 30 12 ]
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 30 12 ]
             %tmp.111 = newa Array<WatchUi.Drawable> 3;
-            %tmp.113 = lgetv %rez_cmp_local_custom_drawable_91035507979172637365.3;
+            %tmp.113 = lgetv %rez_cmp_local_custom_drawable_14118945995970371952.3;
             %tmp.114 = dup %tmp.111;
             %tmp.115 = aputv %tmp.114 0 %tmp.113;
             %tmp.117 = lgetv %rez_cmp_local_text_label.4;
@@ -163,19 +163,19 @@ C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_
             %tmp.122 = dup %tmp.119;
             %tmp.123 = aputv %tmp.122 2 %tmp.121;
             ret %tmp.123;
-C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_stop:
+D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_19_74_stop:
         }
-        [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 33; ]
+        [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 33; ]
         function TopLeftLayout(dc as Graphics.Dc) as Array<WatchUi.Drawable> {
-C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_33_77_start:
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 34 12 ]
-            [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_33_77_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_33_77_stop" ]
-            %rez_cmp_local_custom_drawable_18776061384659087411.1 = local;
+D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_33_77_start:
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 34 12 ]
+            [ "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_33_77_start" "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_33_77_stop" ]
+            %rez_cmp_local_custom_drawable_21068453079316651170.1 = local;
             %tmp.4 = getv ? :Background;
             %tmp.1 = newc %tmp.4 ();
-            lputv %rez_cmp_local_custom_drawable_18776061384659087411.1 %tmp.1;
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 36 12 ]
-            [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_33_77_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_33_77_stop" ]
+            lputv %rez_cmp_local_custom_drawable_21068453079316651170.1 %tmp.1;
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 36 12 ]
+            [ "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_33_77_start" "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_33_77_stop" ]
             %rez_cmp_local_text_label.2 = local;
             %tmp.7 = getm $.Toybox.WatchUi;
             %tmp.8 = getv function ? %tmp.7 :Text;
@@ -209,8 +209,8 @@ C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_
             %tmp.42 = aputv %tmp.41 %tmp.38 %tmp.40;
             %tmp.5 = newc %tmp.8 (%tmp.42);
             lputv %rez_cmp_local_text_label.2 %tmp.5;
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 38 12 ]
-            [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_33_77_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_33_77_stop" ]
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 38 12 ]
+            [ "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_33_77_start" "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_33_77_stop" ]
             %rez_cmp_local_text_value.3 = local;
             %tmp.45 = getm $.Toybox.WatchUi;
             %tmp.46 = getv function ? %tmp.45 :Text;
@@ -244,9 +244,9 @@ C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_
             %tmp.80 = aputv %tmp.79 %tmp.76 %tmp.78;
             %tmp.43 = newc %tmp.46 (%tmp.80);
             lputv %rez_cmp_local_text_value.3 %tmp.43;
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 40 12 ]
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 40 12 ]
             %tmp.81 = newa Array<WatchUi.Drawable> 3;
-            %tmp.83 = lgetv %rez_cmp_local_custom_drawable_18776061384659087411.1;
+            %tmp.83 = lgetv %rez_cmp_local_custom_drawable_21068453079316651170.1;
             %tmp.84 = dup %tmp.81;
             %tmp.85 = aputv %tmp.84 0 %tmp.83;
             %tmp.87 = lgetv %rez_cmp_local_text_label.2;
@@ -256,19 +256,19 @@ C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_
             %tmp.92 = dup %tmp.89;
             %tmp.93 = aputv %tmp.92 2 %tmp.91;
             ret %tmp.93;
-C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_33_77_stop:
+D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_33_77_stop:
         }
-        [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 43; ]
+        [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 43; ]
         function TopRightLayout(dc as Graphics.Dc) as Array<WatchUi.Drawable> {
-C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_43_78_start:
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 44 12 ]
-            [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_43_78_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_43_78_stop" ]
-            %rez_cmp_local_custom_drawable_15443965239917650486.1 = local;
+D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_43_78_start:
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 44 12 ]
+            [ "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_43_78_start" "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_43_78_stop" ]
+            %rez_cmp_local_custom_drawable_20371072644273791579.1 = local;
             %tmp.4 = getv ? :Background;
             %tmp.1 = newc %tmp.4 ();
-            lputv %rez_cmp_local_custom_drawable_15443965239917650486.1 %tmp.1;
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 46 12 ]
-            [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_43_78_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_43_78_stop" ]
+            lputv %rez_cmp_local_custom_drawable_20371072644273791579.1 %tmp.1;
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 46 12 ]
+            [ "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_43_78_start" "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_43_78_stop" ]
             %rez_cmp_local_text_label.2 = local;
             %tmp.7 = getm $.Toybox.WatchUi;
             %tmp.8 = getv function ? %tmp.7 :Text;
@@ -302,8 +302,8 @@ C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_
             %tmp.42 = aputv %tmp.41 %tmp.38 %tmp.40;
             %tmp.5 = newc %tmp.8 (%tmp.42);
             lputv %rez_cmp_local_text_label.2 %tmp.5;
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 48 12 ]
-            [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_43_78_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_43_78_stop" ]
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 48 12 ]
+            [ "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_43_78_start" "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_43_78_stop" ]
             %rez_cmp_local_text_value.3 = local;
             %tmp.45 = getm $.Toybox.WatchUi;
             %tmp.46 = getv function ? %tmp.45 :Text;
@@ -337,9 +337,9 @@ C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_
             %tmp.80 = aputv %tmp.79 %tmp.76 %tmp.78;
             %tmp.43 = newc %tmp.46 (%tmp.80);
             lputv %rez_cmp_local_text_value.3 %tmp.43;
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 50 12 ]
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 50 12 ]
             %tmp.81 = newa Array<WatchUi.Drawable> 3;
-            %tmp.83 = lgetv %rez_cmp_local_custom_drawable_15443965239917650486.1;
+            %tmp.83 = lgetv %rez_cmp_local_custom_drawable_20371072644273791579.1;
             %tmp.84 = dup %tmp.81;
             %tmp.85 = aputv %tmp.84 0 %tmp.83;
             %tmp.87 = lgetv %rez_cmp_local_text_label.2;
@@ -349,19 +349,19 @@ C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_
             %tmp.92 = dup %tmp.89;
             %tmp.93 = aputv %tmp.92 2 %tmp.91;
             ret %tmp.93;
-C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_43_78_stop:
+D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_43_78_stop:
         }
-        [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 53; ]
+        [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 53; ]
         function BottomLeftLayout(dc as Graphics.Dc) as Array<WatchUi.Drawable> {
-C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_53_80_start:
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 54 12 ]
-            [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_53_80_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_53_80_stop" ]
-            %rez_cmp_local_custom_drawable_75984079414653230641.1 = local;
+D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_53_80_start:
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 54 12 ]
+            [ "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_53_80_start" "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_53_80_stop" ]
+            %rez_cmp_local_custom_drawable_12994971541962387087.1 = local;
             %tmp.4 = getv ? :Background;
             %tmp.1 = newc %tmp.4 ();
-            lputv %rez_cmp_local_custom_drawable_75984079414653230641.1 %tmp.1;
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 56 12 ]
-            [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_53_80_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_53_80_stop" ]
+            lputv %rez_cmp_local_custom_drawable_12994971541962387087.1 %tmp.1;
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 56 12 ]
+            [ "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_53_80_start" "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_53_80_stop" ]
             %rez_cmp_local_text_label.2 = local;
             %tmp.7 = getm $.Toybox.WatchUi;
             %tmp.8 = getv function ? %tmp.7 :Text;
@@ -395,8 +395,8 @@ C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_
             %tmp.42 = aputv %tmp.41 %tmp.38 %tmp.40;
             %tmp.5 = newc %tmp.8 (%tmp.42);
             lputv %rez_cmp_local_text_label.2 %tmp.5;
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 58 12 ]
-            [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_53_80_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_53_80_stop" ]
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 58 12 ]
+            [ "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_53_80_start" "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_53_80_stop" ]
             %rez_cmp_local_text_value.3 = local;
             %tmp.45 = getm $.Toybox.WatchUi;
             %tmp.46 = getv function ? %tmp.45 :Text;
@@ -430,9 +430,9 @@ C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_
             %tmp.80 = aputv %tmp.79 %tmp.76 %tmp.78;
             %tmp.43 = newc %tmp.46 (%tmp.80);
             lputv %rez_cmp_local_text_value.3 %tmp.43;
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 60 12 ]
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 60 12 ]
             %tmp.81 = newa Array<WatchUi.Drawable> 3;
-            %tmp.83 = lgetv %rez_cmp_local_custom_drawable_75984079414653230641.1;
+            %tmp.83 = lgetv %rez_cmp_local_custom_drawable_12994971541962387087.1;
             %tmp.84 = dup %tmp.81;
             %tmp.85 = aputv %tmp.84 0 %tmp.83;
             %tmp.87 = lgetv %rez_cmp_local_text_label.2;
@@ -442,19 +442,19 @@ C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_
             %tmp.92 = dup %tmp.89;
             %tmp.93 = aputv %tmp.92 2 %tmp.91;
             ret %tmp.93;
-C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_53_80_stop:
+D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_53_80_stop:
         }
-        [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 63; ]
+        [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 63; ]
         function BottomRightLayout(dc as Graphics.Dc) as Array<WatchUi.Drawable> {
-C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_63_81_start:
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 64 12 ]
-            [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_63_81_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_63_81_stop" ]
-            %rez_cmp_local_custom_drawable_15018684211350049273.1 = local;
+D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_63_81_start:
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 64 12 ]
+            [ "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_63_81_start" "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_63_81_stop" ]
+            %rez_cmp_local_custom_drawable_10262499331787874327.1 = local;
             %tmp.4 = getv ? :Background;
             %tmp.1 = newc %tmp.4 ();
-            lputv %rez_cmp_local_custom_drawable_15018684211350049273.1 %tmp.1;
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 66 12 ]
-            [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_63_81_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_63_81_stop" ]
+            lputv %rez_cmp_local_custom_drawable_10262499331787874327.1 %tmp.1;
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 66 12 ]
+            [ "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_63_81_start" "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_63_81_stop" ]
             %rez_cmp_local_text_label.2 = local;
             %tmp.7 = getm $.Toybox.WatchUi;
             %tmp.8 = getv function ? %tmp.7 :Text;
@@ -488,8 +488,8 @@ C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_
             %tmp.42 = aputv %tmp.41 %tmp.38 %tmp.40;
             %tmp.5 = newc %tmp.8 (%tmp.42);
             lputv %rez_cmp_local_text_label.2 %tmp.5;
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 68 12 ]
-            [ "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_63_81_start" "C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_63_81_stop" ]
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 68 12 ]
+            [ "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_63_81_start" "D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_63_81_stop" ]
             %rez_cmp_local_text_value.3 = local;
             %tmp.45 = getm $.Toybox.WatchUi;
             %tmp.46 = getv function ? %tmp.45 :Text;
@@ -523,9 +523,9 @@ C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_
             %tmp.80 = aputv %tmp.79 %tmp.76 %tmp.78;
             %tmp.43 = newc %tmp.46 (%tmp.80);
             lputv %rez_cmp_local_text_value.3 %tmp.43;
-[ "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 70 12 ]
+[ "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen" 70 12 ]
             %tmp.81 = newa Array<WatchUi.Drawable> 3;
-            %tmp.83 = lgetv %rez_cmp_local_custom_drawable_15018684211350049273.1;
+            %tmp.83 = lgetv %rez_cmp_local_custom_drawable_10262499331787874327.1;
             %tmp.84 = dup %tmp.81;
             %tmp.85 = aputv %tmp.84 0 %tmp.83;
             %tmp.87 = lgetv %rez_cmp_local_text_label.2;
@@ -535,26 +535,26 @@ C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_
             %tmp.92 = dup %tmp.89;
             %tmp.93 = aputv %tmp.92 2 %tmp.91;
             ret %tmp.93;
-C_Users_johan_battery_report15_12_OpenBrakesGarmin_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_63_81_stop:
+D_Programme_Github_OpenBrakes_GarminOpenBrakes_OpenBrakes_bin_gen_006_B3122_00_source_Rez_mcgen_63_81_stop:
         }
     }
-    [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 74; ]
+    [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 74; ]
     module Menus {
-        [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 74; ]
+        [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 74; ]
         <init> {
         }
     }
-    [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 77; ]
+    [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 77; ]
     module Strings {
-        [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 77; ]
+        [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 77; ]
         <init> {
         }
-        [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 78; @position = 27; initialized = true; ]
+        [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 78; @position = 27; initialized = true; ]
         var label as Symbol;
-        [ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 79; @position = 27; initialized = true; ]
+        [ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 79; @position = 27; initialized = true; ]
         var AppName as Symbol;
     }
 }
-[ @file = "C:\Users\johan\battery-report15.12\OpenBrakesGarmin\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 1; ]
+[ @file = "D:\Programme\Github\OpenBrakes\GarminOpenBrakes\OpenBrakes\bin\gen\006-B3122-00\source\Rez.mcgen"; @line = 1; ]
 <init> {
 }
