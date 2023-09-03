@@ -281,6 +281,33 @@ Widget _buildTorqueCalibrationOptions() {
           ),
         ],
       ),
+      Row(  // This is the new row for the known weight input
+        children: [
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.symmetric(vertical: 8.0),
+              child: TextField(
+                controller: _calibrationValueController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  labelText: 'Enter known weight',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: 8.0),
+            child: ElevatedButton(
+              onPressed: () {
+                final command = 'CALIBRATE:${_calibrationValueController.text}';
+                _writeCharacteristic(sensorUuid, torqueServiceUuid, command);
+              },
+              child: Text('Calibrate with known weight'),
+            ),
+          ),
+        ],
+      ),
     ],
   );
 }

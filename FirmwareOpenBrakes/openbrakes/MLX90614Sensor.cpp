@@ -10,10 +10,10 @@ void MLX90614Sensor::begin() {
 
 float MLX90614Sensor::readTemperature() {
   // Commented out the original read function
-  // return mlx.readObjectTempC() + calibrationOffset;
+  return mlx.readObjectTempC() + calibrationOffset;
 
   // Return random numbers between 20 and 500 for testing
-  return random(20, 501);
+  //return random(20, 501);
 }
 
 void MLX90614Sensor::calibrate(float referenceTemperature) {

@@ -1,237 +1,182 @@
 #include <Arduino.h>
-#include "sensors.h"
-#include "bluefruit.h"
+#include <BLEDevice.h>
+#include <BLEServer.h>
+#include <BLEUtils.h>
 #include "StrainGaugeSensor.h"
 #include "MLX90614Sensor.h"
 #include "HallSensor.h"
-#include <xiaobattery.h>
+#include <WiFi.h>
+#include <time.h>
 
-#define UUID128_SVC_SENSOR   "06633474-1e8e-43aa-a85f-02f8c2814fb2"
-#define UUID128_CHR_THERMAL  "a5bfea66-efec-4808-b472-2ac3d0c5a0ef"
-#define UUID128_CHR_STRAIN   "0ec3dcce-9610-4d0b-9a66-338ca2097fa0"
-#define UUID128_CHR_RPM      "c51dfdea-ecd7-4fc1-872c-0076f2428d27"
+
+
+#define SERVICE_UUID               "06633474-1e8e-43aa-a85f-02f8c2814fb2"
+#define THERMAL_CHAR_UUID          "a5bfea66-efec-4808-b472-2ac3d0c5a0ef"
+#define STRAIN_CHAR_UUID           "0ec3dcce-9610-4d0b-9a66-338ca2097fa0"
+#define RPM_CHAR_UUID              "c51dfdea-ecd7-4fc1-872c-0076f2428d27"
 #define UUID128_CHR_THERMAL_CALIB  "20eeb27c-8244-4868-8528-9b878049fea8"
 #define UUID128_CHR_STRAIN_CALIB   "e0f72bb5-c6f3-4953-9b2c-90db43906bf8"
 #define UUID128_CHR_RPM_CALIB      "c2e40308-dbeb-4fe2-b76d-8861a4306599"
+#define DATA_PACKET_CHAR_UUID        "9be68165-d986-47e9-9624-8abc47dfe306"
 
-const uint8_t DOUT_PIN = A1;
-const uint8_t CLK_PIN = A0;
+void therm_calibration_callback(uint16_t conn_handle, BLECharacteristic *chr, uint8_t *data, uint16_t len);
+void strain_calibration_callback(uint16_t conn_handle, BLECharacteristic *chr, uint8_t *data, uint16_t len);
+void rpm_calibration_callback(uint16_t conn_handle, BLECharacteristic *chr, uint8_t *data, uint16_t len);
+
+
+const uint8_t DOUT_PIN = 18;
+const uint8_t CLK_PIN = 19;
+float strainGaugeScaleFactor = 2000;
 StrainGaugeSensor strainGaugeSensor(DOUT_PIN, CLK_PIN);
-
 MLX90614Sensor temperatureSensor;
 
-const uint8_t HALL_SENSOR_PIN = 2; // Replace with the actual pin you are using
-const uint8_t MAGNET_COUNT = 1; // Replace with the actual number of magnets on the wheel, can also be done in the setup (BLE Callback)
+const uint8_t HALL_SENSOR_PIN = 4;
+const uint8_t MAGNET_COUNT = 1;
 HallSensor hallSensor(HALL_SENSOR_PIN, MAGNET_COUNT);
 
+const char* ssid = "iPhone von Johannes";
+const char* password = "12345678";
+const char* ntpServer = "pool.ntp.org";    // NTP Server
+const long  gmtOffset_sec = 3600;          // Offset for your timezone in seconds. This is for GMT +1. Adjust accordingly.
+const int   daylightOffset_sec = 3600;     // If daylight saving is used, adjust accordingly. This is for 1 hour daylight saving.
+// Constants for timeouts
+const uint32_t WIFI_CONNECTION_TIMEOUT_MS = 10000;  // 10 seconds
+const uint32_t NTP_SYNC_TIMEOUT_MS = 10000;         // 10 seconds
+const time_t NTP_REFERENCE_TIMESTAMP = 1510644967;   // Nov 14 2017
+
+#pragma pack(push, 1) // Ensures no padding
+struct DataPacket {
+    uint32_t timestamp;
+    float torque;
+    float temperature;
+    uint16_t rpm;
+};
+#pragma pack(pop)
 
 
-// BLE service and characteristics
-BLEService brakeSensorService = BLEService(UUID128_SVC_SENSOR);
-BLECharacteristic bleCharacteristicTherm = BLECharacteristic(UUID128_CHR_THERMAL);
-BLECharacteristic bleCharacteristicStrain = BLECharacteristic(UUID128_CHR_STRAIN);
-BLECharacteristic bleCharacteristicRPM = BLECharacteristic(UUID128_CHR_RPM);
 
-BLECharacteristic bleCharacteristicThermCalib = BLECharacteristic(UUID128_CHR_THERMAL_CALIB);
-BLECharacteristic bleCharacteristicStrainCalib = BLECharacteristic(UUID128_CHR_STRAIN_CALIB);
-BLECharacteristic bleCharacteristicRPMCalib = BLECharacteristic(UUID128_CHR_RPM_CALIB);
+BLEServer *pServer = NULL;
+BLECharacteristic *pCharacteristicThermal = NULL;
+BLECharacteristic *pCharacteristicStrain = NULL;
+BLECharacteristic *pCharacteristicRPM = NULL;
+BLECharacteristic *pCharacteristicThermalCalib = NULL;
+BLECharacteristic *pCharacteristicStrainCalib = NULL;
+BLECharacteristic *pCharacteristicRPMCalib = NULL;
+BLECharacteristic *pCharacteristicDataPacket = NULL;
 
-BLEDis bledis;    // DIS (Device Information Service) helper class instance
-BLEBas blebas;    // BAS (Battery Service) helper class instance
-
-Xiao battery;
-
-// Variables to store averaged sensor readings
 float avgTemperature = 0;
 float avgStrainGaugeValue = 0;
 float avgWheelSpeedRadS = 0;
 
-// Variables to store timestamps
 unsigned long lastReadMillis = 0;
-unsigned long readInterval = 10; // 100 ms for readAndAverageSensors()
+unsigned long readInterval = 100;
 
 unsigned long lastNotifyMillis = 0;
-unsigned long notifyInterval = 1000; // 1000 ms for sendData()
+unsigned long notifyInterval = 1000;
 
-unsigned long lastBatteryMillis = 0;
-unsigned long batteryInterval = 10000; // 1000 ms for sendData()
+bool isTaring = false;
+bool isRecording = false;
 
-uint32_t timeout = 5000; // 5 seconds timeout
-uint32_t startTime;
+class MyServerCallbacks: public BLEServerCallbacks {
+    void onConnect(BLEServer* pServer) override {
+        Serial.println("Connected");
+    }
 
+    void onDisconnect(BLEServer* pServer) override {
+        Serial.println("Disconnected");
+        isRecording = false;
+    }
+};
+
+class ThermCalibrationCallbacks : public BLECharacteristicCallbacks {
+    void onWrite(BLECharacteristic *characteristic) override {
+        therm_calibration_callback(0, characteristic, (uint8_t*) characteristic->getValue().c_str(), characteristic->getValue().length());
+    }
+};
+
+class StrainCalibrationCallbacks : public BLECharacteristicCallbacks {
+    void onWrite(BLECharacteristic *characteristic) override {
+        strain_calibration_callback(0, characteristic, (uint8_t*) characteristic->getValue().c_str(), characteristic->getValue().length());
+    }
+};
+
+class RPMCalibrationCallbacks : public BLECharacteristicCallbacks {
+    void onWrite(BLECharacteristic *characteristic) override {
+        rpm_calibration_callback(0, characteristic, (uint8_t*) characteristic->getValue().c_str(), characteristic->getValue().length());
+    }
+};
 
 void setup() {
-  pinMode(LED_RED, OUTPUT);
-  pinMode(LED_GREEN, OUTPUT);
-  pinMode(LED_BLUE, OUTPUT);
-  //Set high charging current:
-  Serial.begin(115200);
-  startTime = millis();
-  while (!Serial && (millis() - startTime) < timeout); // Wait for the Serial Monitor to open or until timeout
-  Serial.println("Serial communication initialized");
-  strainGaugeSensor.begin();
-  temperatureSensor.begin();
-  hallSensor.begin();
-  // Initialize BLE
-  Bluefruit.begin();
-  Bluefruit.Periph.setConnectCallback(connect_callback);
-  Bluefruit.Periph.setDisconnectCallback(disconnect_callback);
-  Bluefruit.setTxPower(4);
-  Bluefruit.setName("OpenBrakes");
-  bledis.setManufacturer("OpenBrakes");
-  bledis.setModel("FrontBrake");
-  bledis.begin();
-  blebas.begin();
-  blebas.write(100);
-  // Set up BLE services and advertising
-  setup_ble_services();
-  setup_ble_advertising();
-  sensors_init();
-  Serial.println("Setup finished");
-}
-
-void setup_ble_services() {
-  brakeSensorService.begin();
-  bleCharacteristicTherm.setProperties(CHR_PROPS_NOTIFY);
-  bleCharacteristicTherm.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
-  bleCharacteristicTherm.begin();
-  bleCharacteristicStrain.setProperties(CHR_PROPS_NOTIFY);
-  bleCharacteristicStrain.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
-  bleCharacteristicStrain.begin();
-  bleCharacteristicRPM.setProperties(CHR_PROPS_NOTIFY);
-  bleCharacteristicRPM.setPermission(SECMODE_OPEN, SECMODE_NO_ACCESS);
-  bleCharacteristicRPM.begin();
-  bleCharacteristicThermCalib.setProperties(CHR_PROPS_WRITE | CHR_PROPS_READ);
-  bleCharacteristicThermCalib.setPermission(SECMODE_OPEN, SECMODE_OPEN);
-  bleCharacteristicThermCalib.setWriteCallback(therm_calibration_callback);
-  bleCharacteristicThermCalib.begin();
-  bleCharacteristicStrainCalib.setProperties(CHR_PROPS_WRITE | CHR_PROPS_READ);
-  bleCharacteristicStrainCalib.setPermission(SECMODE_OPEN, SECMODE_OPEN);
-  bleCharacteristicStrainCalib.setWriteCallback(strain_calibration_callback);
-  bleCharacteristicStrainCalib.begin();
-  bleCharacteristicRPMCalib.setProperties(CHR_PROPS_WRITE | CHR_PROPS_READ);
-  bleCharacteristicRPMCalib.setPermission(SECMODE_OPEN, SECMODE_OPEN);
-  bleCharacteristicRPMCalib.setWriteCallback(rpm_calibration_callback);
-  bleCharacteristicRPMCalib.begin();
-  Serial.println("Service and Characteristic Setup finished");
-}
-
-void setup_ble_advertising() {
-  Bluefruit.Advertising.addFlags(BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE);
-  Bluefruit.Advertising.addTxPower();
-  Bluefruit.Advertising.addService(bledis);
-  Bluefruit.Advertising.addService(blebas);
-  Bluefruit.Advertising.addService(brakeSensorService);
-  Bluefruit.Advertising.addName();
-  Bluefruit.Advertising.restartOnDisconnect(true);
-  Bluefruit.Advertising.setInterval(32, 244);
-  Bluefruit.Advertising.setFastTimeout(30);
-  Bluefruit.Advertising.start(0);
-  Serial.println("Advertising Setup finished");
-}
-
-void connect_callback(uint16_t conn_handle) {
-  Serial.println("Connected");
-}
-
-void disconnect_callback(uint16_t conn_handle, uint8_t reason) {
-  Serial.println("Disconnected");
-}
-
-void therm_calibration_callback(uint16_t conn_handle, BLECharacteristic *chr, uint8_t *data, uint16_t len) {
-  String command = String((char *)data);
-
-  if (command.startsWith("CALIBRATE:")) {
-    // Parse the reference temperature for calibration
-    float referenceTemperature = command.substring(10).toFloat();
-
-    // Call the temperature sensor calibration function
-    temperatureSensor.calibrate(referenceTemperature);
-
-    // Respond with a message
-    chr->write("Temperature calibrated", 22);
-  } else {
-    Serial.println("Unknown command");
-    chr->write("Unknown command", 15);
-  }
-}
-
-void strain_calibration_callback(uint16_t conn_handle, BLECharacteristic *chr, uint8_t *data, uint16_t len) {
-  String command = String((char *)data);
-
-  if (command.startsWith("CALIBRATE")) {
-    // Call the strain gauge calibration function
-    strainGaugeSensor.calibrate();
-
-    // Respond with a message
-    chr->write("Calibration successful", 22);
-  } else if (command.startsWith("TARE")) {
-    // Call the strain gauge tare function
+    Serial.begin(115200);
+    strainGaugeSensor.begin();
+    strainGaugeSensor.setScale(strainGaugeScaleFactor);
     strainGaugeSensor.tare();
+    temperatureSensor.begin();
+    hallSensor.begin();
 
-    // Respond with a message
-    chr->write("Tare successful", 14);
-  } else if (command.startsWith("SCALE:")) {
-    // Set the scale factor
-    float factor = command.substring(6).toFloat();
-    strainGaugeSensor.setScale(factor);
+    BLEDevice::init("OpenBrakes");
+    pServer = BLEDevice::createServer();
 
-    // Respond with a message
-    chr->write("Scale factor set", 16);
-  } else {
-    Serial.println("Unknown command");
-    chr->write("Unknown command", 15);
-  }
+    pServer->setCallbacks(new MyServerCallbacks());
+
+    BLEService *pService = pServer->createService(SERVICE_UUID);
+
+    pCharacteristicThermal = pService->createCharacteristic(THERMAL_CHAR_UUID, BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_NOTIFY);
+    pCharacteristicStrain = pService->createCharacteristic(STRAIN_CHAR_UUID, BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_NOTIFY);
+    pCharacteristicRPM = pService->createCharacteristic(RPM_CHAR_UUID, BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_NOTIFY);
+    pCharacteristicDataPacket = pService->createCharacteristic(DATA_PACKET_CHAR_UUID,BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_NOTIFY
+);
+
+    // Create calibration characteristics
+pCharacteristicThermalCalib = pService->createCharacteristic(
+    UUID128_CHR_THERMAL_CALIB, 
+    BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_NOTIFY | BLECharacteristic::PROPERTY_READ
+);
+pCharacteristicStrainCalib = pService->createCharacteristic(
+    UUID128_CHR_STRAIN_CALIB, 
+    BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_NOTIFY | BLECharacteristic::PROPERTY_READ
+);
+pCharacteristicRPMCalib = pService->createCharacteristic(
+    UUID128_CHR_RPM_CALIB, 
+    BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_NOTIFY | BLECharacteristic::PROPERTY_READ
+);
+    // Set the callback handlers
+    pCharacteristicThermalCalib->setCallbacks(new ThermCalibrationCallbacks());
+    pCharacteristicStrainCalib->setCallbacks(new StrainCalibrationCallbacks());
+    pCharacteristicRPMCalib->setCallbacks(new RPMCalibrationCallbacks());
+
+    pService->start();
+
+    BLEAdvertising *pAdvertising = BLEDevice::getAdvertising();
+    pAdvertising->addServiceUUID(SERVICE_UUID);
+    pAdvertising->start();
+    Serial.print("Connecting to ");
+    Serial.println(ssid);
+    Serial.println(connectWiFi(WIFI_CONNECTION_TIMEOUT_MS) ? "WiFi connected" : "WiFi connection failed or timed out.");
+
+    Serial.println(syncNTP(NTP_SYNC_TIMEOUT_MS) ? "Time set successfully." : "NTP time synchronization failed or timed out.");
+    Serial.println("Setup finished");
+
 }
-
-
-void rpm_calibration_callback(uint16_t conn_handle, BLECharacteristic *chr, uint8_t *data, uint16_t len) {
-  // Call the wheel RPM calibration function
-
-  String command = String((char *)data);
-  uint8_t newMagnetCount = command.toInt();
-
-  if (newMagnetCount > 0) {
-    Serial.print("Updating magnet count to: ");
-    Serial.println(newMagnetCount);
-
-    hallSensor.setMagnetCount(newMagnetCount);
-
-    // Send feedback after updating the magnet count
-    String feedback = "Magnet count updated to: " + String(newMagnetCount);
-    chr->write(feedback.c_str());
-  } else {
-    Serial.println("Invalid data received for magnet count update");
-
-    // Send feedback about the invalid data
-    String feedback = "Invalid data received for magnet count update";
-    chr->write(feedback.c_str());
-  }
-}
-
 
 void loop() {
-  // Call readAndAverageSensors() every 100 ms
-  unsigned long currentMillis = millis();
-   if (currentMillis - lastReadMillis >= readInterval) {
-     readAndAverageSensors();
-     blinkRedLEDOnce();
-     lastReadMillis = currentMillis;
-   }
-  // Call sendData() every 1000 ms
-  if (Bluefruit.connected()){
-  if (currentMillis - lastNotifyMillis >= notifyInterval) {
-    sendNotifications();
-    blinkGreenLEDOnce();
-    lastNotifyMillis = currentMillis;
-  }
-  }
-  if (currentMillis - lastBatteryMillis >= batteryInterval) {
-    blebas.notify(uint((battery.GetBatteryVoltage()-3.2)*100));
-    Serial.print(uint8_t((battery.GetBatteryVoltage()-3.2)*100));
-    //blebas.notify(50);
-    lastBatteryMillis = currentMillis;
-  }  
+    unsigned long currentMillis = millis();
+    if (!isTaring && !isRecording) {
+        if (currentMillis - lastReadMillis >= readInterval) {
+            readAndAverageSensors();
+            lastReadMillis = currentMillis;
+        }
+    
+        if (currentMillis - lastNotifyMillis >= notifyInterval) {
+            sendNotifications();
+            printCurrentTime();
+            lastNotifyMillis = currentMillis;
+        }
+    }
+    if (isRecording) {
+        broadcastDataPacket();
+        delay(50);
+    }
 }
 
 void readAndAverageSensors() {
@@ -249,6 +194,11 @@ void readAndAverageSensors() {
   avgTemperature = temperatureSum / numSamples;
   avgStrainGaugeValue = strainGaugeSum / numSamples;
   avgWheelSpeedRadS = wheelSpeedSum / numSamples;
+
+  // Print the averaged sensor values
+  Serial.print("Avg Temperature: "); Serial.println(avgTemperature);
+  Serial.print("Avg Strain Gauge: "); Serial.println(avgStrainGaugeValue);
+  Serial.print("Avg Wheel Speed (Rad/s): "); Serial.println(avgWheelSpeedRadS);
 }
 
 void sendNotifications() {
@@ -262,58 +212,166 @@ void sendNotifications() {
   uint8_t speedBytes[sizeof(avgWheelSpeedRadS)];
   memcpy(speedBytes, &avgWheelSpeedRadS, sizeof(avgWheelSpeedRadS));
 
-  // Print averaged values to the Serial monitor
-  Serial.print("Avg Temperature: ");
-  Serial.print(avgTemperature);
-  Serial.print(" | Avg Strain Gauge Value: ");
-  Serial.print(avgStrainGaugeValue);
-  Serial.print(" | Avg Wheel Speed (rad/s): ");
-  Serial.println(avgWheelSpeedRadS);
+  pCharacteristicThermal->setValue(temperatureBytes, sizeof(avgTemperature));
+  pCharacteristicThermal->notify();
 
-  // Transmit data only when a BLE connection is established
-  if (Bluefruit.connected()) {
-    // Send notifications
-    bleCharacteristicTherm.notify(temperatureBytes, sizeof(avgTemperature));
-    bleCharacteristicStrain.notify(strainGaugeBytes, sizeof(avgStrainGaugeValue));
-    bleCharacteristicRPM.notify(speedBytes, sizeof(avgWheelSpeedRadS));
+  pCharacteristicStrain->setValue(strainGaugeBytes, sizeof(avgStrainGaugeValue));
+  pCharacteristicStrain->notify();
+
+  pCharacteristicRPM->setValue(speedBytes, sizeof(avgWheelSpeedRadS));
+  pCharacteristicRPM->notify();
+}
+
+void therm_calibration_callback(uint16_t conn_handle, BLECharacteristic *chr, uint8_t *data, uint16_t len) {
+  String command = String((char *)data);
+
+  if (command.startsWith("CALIBRATE:")) {
+    // Parse the reference temperature for calibration
+    float referenceTemperature = command.substring(10).toFloat();
+
+    // Call the temperature sensor calibration function
+    temperatureSensor.calibrate(referenceTemperature);
+
+    // Respond with a message
+    chr->setValue((uint8_t*)"Temperature calibrated", 22);
+  } else {
+    Serial.println("Unknown command");
+    chr->setValue((uint8_t*)"Unknown command", 15);
   }
 }
 
-void writeToCSV() {
-  // Function to write raw data into a .csv file for later detailed review
-}
+void strain_calibration_callback(uint16_t conn_handle, BLECharacteristic *chr, uint8_t *data, uint16_t len) {
+  String command = String((char *)data);
 
-unsigned long previousMillisGreen = 0;
-unsigned long previousMillisRed = 0;
-const unsigned long intervalGreen = 50;
-const unsigned long intervalRed = 50;
+  if (command.startsWith("CALIBRATE:")) {
+    isTaring = true;
+    delay(5000);
+    Serial.println("Calibration initial delay");
+    float knownWeight = command.substring(10).toFloat();
+    strainGaugeSensor.calibrate(knownWeight);
+    delay(3000);
+    Serial.println("Calibration exit delay");
+    isTaring = false;
 
-void blinkGreenLEDOnce() {
-  unsigned long currentMillis = millis();
+    // Since the calibrate function is now void, you may want to retrieve the scale in another way, 
+    // e.g., from a member function of strainGaugeSensor like strainGaugeSensor.getScale(). 
+    // For the purpose of this example, I'm assuming such a function exists:
+    float scale = strainGaugeSensor.getScale();
+    
+    // Respond with the updated scale factor
+    String feedback = "Updated scale factor: " + String(scale, 4); // 4 decimal places
+    Serial.println("Calibration finished, Scale factor is now " + String(scale));
+    chr->setValue((uint8_t*)feedback.c_str(), feedback.length());
+  } else if (command.startsWith("TARE")) {
+    // Call the strain gauge tare function
+    isTaring = true;
+    delay(5000);
+    Serial.println("Tare intial delay");
+    strainGaugeSensor.tare();
+    delay(3000);
+    Serial.println("Tare exit delay");
+    isTaring = false;  
 
-  if (currentMillis - previousMillisGreen >= intervalGreen) {
-    static bool ledStateGreen = false;
+    // Respond with a message
+    chr->setValue((uint8_t*)"Tare successful", 14);
+  } else if (command.startsWith("SCALE:")) {
+    // Set the scale factor
+    isTaring = true;
+    delay(5000);
+    Serial.println("Scale intial delay");
+    float factor = command.substring(6).toFloat();
+    strainGaugeSensor.setScale(factor);
+    delay(3000);
+    Serial.println("Scale exit delay");
+    isTaring = false; 
 
-    digitalWrite(LED_GREEN, ledStateGreen);
-    ledStateGreen = !ledStateGreen;
-    previousMillisGreen = currentMillis;
+    // Respond with a message
+    chr->setValue((uint8_t*)"Scale factor set", 16);
+  } else {
+    Serial.println("Unknown command");
+    chr->setValue((uint8_t*)"Unknown command", 15);
   }
 }
 
-void blinkRedLEDOnce() {
-  unsigned long currentMillis = millis();
 
-  if (currentMillis - previousMillisRed >= intervalRed) {
-    static bool ledStateRed = false;
 
-    digitalWrite(LED_RED, ledStateRed);
-    ledStateRed = !ledStateRed;
-    previousMillisRed = currentMillis;
+void rpm_calibration_callback(uint16_t conn_handle, BLECharacteristic *chr, uint8_t *data, uint16_t len) {
+  String command = String((char *)data);
+
+  // Handle Start Recording command
+  if (command.startsWith("START_REC")) {
+    isRecording = true;
+    Serial.println("Recording started");
+    chr->setValue((uint8_t*)"Recording started", 17);
+
+  // Handle Stop Recording command
+  } else if (command.startsWith("STOP_REC")) {
+    isRecording = false;
+    Serial.println("Recording stopped");
+    chr->setValue((uint8_t*)"Recording stopped", 17);
+
+  // Handle magnet count calibration
+  } else {
+    uint8_t newMagnetCount = command.toInt();
+    if (newMagnetCount > 0) {
+      Serial.print("Updating magnet count to: ");
+      Serial.println(newMagnetCount);
+      hallSensor.setMagnetCount(newMagnetCount);
+      // Send feedback after updating the magnet count
+      String feedback = "Magnet count updated to: " + String(newMagnetCount);
+      chr->setValue((uint8_t*)feedback.c_str(), feedback.length());
+    } else {
+      Serial.println("Invalid data received for magnet count update");
+      // Send feedback about the invalid data
+      String feedback = "Invalid data received for magnet count update";
+      chr->setValue((uint8_t*)feedback.c_str(), feedback.length());
+    }
   }
 }
 
+bool connectWiFi(uint32_t timeout) {
+    uint32_t startMillis = millis();
+    WiFi.begin(ssid, password);
+    while (WiFi.status() != WL_CONNECTED && millis() - startMillis < timeout) {
+        delay(500);
+    }
+    return WiFi.status() == WL_CONNECTED;
+}
 
+bool syncNTP(uint32_t timeout) {
+    configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
+    uint32_t startMillis = millis();
+    while (time(nullptr) <= NTP_REFERENCE_TIMESTAMP && millis() - startMillis < timeout) {
+        delay(500);
+    }
+    return time(nullptr) > NTP_REFERENCE_TIMESTAMP;
+}
 
+void printCurrentTime() {
+  time_t now;
+  struct tm timeinfo;
+  
+  time(&now); // Get the current time
+  localtime_r(&now, &timeinfo); // Convert the time structure
 
+  Serial.printf("Current time: %04d-%02d-%02d %02d:%02d:%02d\n",
+                timeinfo.tm_year + 1900,
+                timeinfo.tm_mon + 1,
+                timeinfo.tm_mday,
+                timeinfo.tm_hour,
+                timeinfo.tm_min,
+                timeinfo.tm_sec);
+}
 
+void broadcastDataPacket() {
+    DataPacket packet;
+    
+    packet.timestamp = time(nullptr); // Current time
+    packet.torque = strainGaugeSensor.read(); // Assuming a readValue function or similar
+    packet.temperature = temperatureSensor.readTemperature();
+    packet.rpm = hallSensor.readSpeedRadS();
+
+    pCharacteristicDataPacket->setValue((uint8_t*)&packet, sizeof(packet));
+    pCharacteristicDataPacket->notify();
+}
 

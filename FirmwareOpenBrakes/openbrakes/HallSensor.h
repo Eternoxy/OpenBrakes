@@ -18,6 +18,7 @@ private:
     volatile uint32_t _magnetPasses;
     volatile uint32_t _lastMillis;
     static HallSensor* _instance;
+    float _lastSpeed; 
 };
 
 #endif

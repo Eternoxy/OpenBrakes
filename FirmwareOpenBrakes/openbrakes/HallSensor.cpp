@@ -13,25 +13,32 @@ void HallSensor::begin() {
 }
 
 float HallSensor::readSpeedRadS() {
-    // Comment out the actual measurement and return a random number between 0 and 5
-    /*
-    uint32_t magnetPasses = _magnetPasses;
-    uint32_t lastMillis = _lastMillis;
     uint32_t currentTime = millis();
+    uint32_t elapsedTime = currentTime - _lastMillis;
 
-    uint32_t elapsedTime = currentTime - lastMillis;
-    if (elapsedTime == 0) {
-        elapsedTime = 1;
+    const uint32_t SHORT_DURATION = 1000; // 1 second
+    const uint32_t LONG_DURATION = 5000; // 5 seconds
+
+    // If the elapsed time is too short (below 1s) and the number of magnet passes is below threshold, just return the last speed.
+    if(elapsedTime < SHORT_DURATION && _magnetPasses < _magnetCount) {
+        return _lastSpeed;
     }
 
+    // If speed is very low (elapsed time goes beyond 5 seconds), and we haven't reached a full wheel revolution, just return the last speed.
+    if(elapsedTime < LONG_DURATION && _magnetPasses < _magnetCount) {
+        return _lastSpeed;
+    }
+
+    // Calculate speed
+    float wheelRevolutions = (float)_magnetPasses / (float)_magnetCount;
+    float revolutionsPerMinute = (wheelRevolutions * 60000.0) / elapsedTime;
+    _lastSpeed = (revolutionsPerMinute * 2.0 * PI) / 60.0;
+
+    // Reset
     _magnetPasses = 0;
     _lastMillis = currentTime;
 
-    float wheelRevolutions = (float)magnetPasses / (float)_magnetCount;
-    float revolutionsPerMinute = (wheelRevolutions * 60000.0) / elapsedTime;
-    return (revolutionsPerMinute * 2.0 * PI) / 60.0;
-    */
-    return random(0, 6); // Generates a random number between 0 and 5
+    return _lastSpeed;
 }
 
 void HallSensor::setMagnetCount(uint8_t magnetCount) {
