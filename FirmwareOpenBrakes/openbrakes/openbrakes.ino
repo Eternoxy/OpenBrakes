@@ -7,8 +7,7 @@
 #include "HallSensor.h"
 #include <WiFi.h>
 #include <time.h>
-
-
+#include <SPIFFS.h>
 
 #define SERVICE_UUID               "06633474-1e8e-43aa-a85f-02f8c2814fb2"
 #define THERMAL_CHAR_UUID          "a5bfea66-efec-4808-b472-2ac3d0c5a0ef"
@@ -17,12 +16,20 @@
 #define UUID128_CHR_THERMAL_CALIB  "20eeb27c-8244-4868-8528-9b878049fea8"
 #define UUID128_CHR_STRAIN_CALIB   "e0f72bb5-c6f3-4953-9b2c-90db43906bf8"
 #define UUID128_CHR_RPM_CALIB      "c2e40308-dbeb-4fe2-b76d-8861a4306599"
-#define DATA_PACKET_CHAR_UUID        "9be68165-d986-47e9-9624-8abc47dfe306"
 
+void handleSerialCommand(String command);
+void listFiles();
+void readFile(String filename);
+bool connectWiFi(uint32_t timeout);
+bool syncNTP(uint32_t timeout);
+void printCurrentTime();
+void readAndAverageSensors();
+void sendNotifications();
 void therm_calibration_callback(uint16_t conn_handle, BLECharacteristic *chr, uint8_t *data, uint16_t len);
 void strain_calibration_callback(uint16_t conn_handle, BLECharacteristic *chr, uint8_t *data, uint16_t len);
 void rpm_calibration_callback(uint16_t conn_handle, BLECharacteristic *chr, uint8_t *data, uint16_t len);
-
+void startRecording();
+void stopRecording();
 
 const uint8_t DOUT_PIN = 18;
 const uint8_t CLK_PIN = 19;
@@ -39,21 +46,9 @@ const char* password = "12345678";
 const char* ntpServer = "pool.ntp.org";    // NTP Server
 const long  gmtOffset_sec = 3600;          // Offset for your timezone in seconds. This is for GMT +1. Adjust accordingly.
 const int   daylightOffset_sec = 3600;     // If daylight saving is used, adjust accordingly. This is for 1 hour daylight saving.
-// Constants for timeouts
 const uint32_t WIFI_CONNECTION_TIMEOUT_MS = 10000;  // 10 seconds
 const uint32_t NTP_SYNC_TIMEOUT_MS = 10000;         // 10 seconds
 const time_t NTP_REFERENCE_TIMESTAMP = 1510644967;   // Nov 14 2017
-
-#pragma pack(push, 1) // Ensures no padding
-struct DataPacket {
-    uint32_t timestamp;
-    float torque;
-    float temperature;
-    uint16_t rpm;
-};
-#pragma pack(pop)
-
-
 
 BLEServer *pServer = NULL;
 BLECharacteristic *pCharacteristicThermal = NULL;
@@ -62,20 +57,21 @@ BLECharacteristic *pCharacteristicRPM = NULL;
 BLECharacteristic *pCharacteristicThermalCalib = NULL;
 BLECharacteristic *pCharacteristicStrainCalib = NULL;
 BLECharacteristic *pCharacteristicRPMCalib = NULL;
-BLECharacteristic *pCharacteristicDataPacket = NULL;
 
 float avgTemperature = 0;
 float avgStrainGaugeValue = 0;
 float avgWheelSpeedRadS = 0;
 
 unsigned long lastReadMillis = 0;
-unsigned long readInterval = 100;
+unsigned long readInterval = 50;
 
 unsigned long lastNotifyMillis = 0;
-unsigned long notifyInterval = 1000;
+unsigned long notifyInterval = 2000;
 
 bool isTaring = false;
 bool isRecording = false;
+
+File dataFile;
 
 class MyServerCallbacks: public BLEServerCallbacks {
     void onConnect(BLEServer* pServer) override {
@@ -116,30 +112,27 @@ void setup() {
 
     BLEDevice::init("OpenBrakes");
     pServer = BLEDevice::createServer();
-
     pServer->setCallbacks(new MyServerCallbacks());
 
     BLEService *pService = pServer->createService(SERVICE_UUID);
-
     pCharacteristicThermal = pService->createCharacteristic(THERMAL_CHAR_UUID, BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_NOTIFY);
     pCharacteristicStrain = pService->createCharacteristic(STRAIN_CHAR_UUID, BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_NOTIFY);
     pCharacteristicRPM = pService->createCharacteristic(RPM_CHAR_UUID, BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_NOTIFY);
-    pCharacteristicDataPacket = pService->createCharacteristic(DATA_PACKET_CHAR_UUID,BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_NOTIFY
-);
 
     // Create calibration characteristics
-pCharacteristicThermalCalib = pService->createCharacteristic(
-    UUID128_CHR_THERMAL_CALIB, 
-    BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_NOTIFY | BLECharacteristic::PROPERTY_READ
-);
-pCharacteristicStrainCalib = pService->createCharacteristic(
-    UUID128_CHR_STRAIN_CALIB, 
-    BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_NOTIFY | BLECharacteristic::PROPERTY_READ
-);
-pCharacteristicRPMCalib = pService->createCharacteristic(
-    UUID128_CHR_RPM_CALIB, 
-    BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_NOTIFY | BLECharacteristic::PROPERTY_READ
-);
+    pCharacteristicThermalCalib = pService->createCharacteristic(
+        UUID128_CHR_THERMAL_CALIB, 
+        BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_NOTIFY | BLECharacteristic::PROPERTY_READ
+    );
+    pCharacteristicStrainCalib = pService->createCharacteristic(
+        UUID128_CHR_STRAIN_CALIB, 
+        BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_NOTIFY | BLECharacteristic::PROPERTY_READ
+    );
+    pCharacteristicRPMCalib = pService->createCharacteristic(
+        UUID128_CHR_RPM_CALIB, 
+        BLECharacteristic::PROPERTY_WRITE | BLECharacteristic::PROPERTY_NOTIFY | BLECharacteristic::PROPERTY_READ
+    );
+
     // Set the callback handlers
     pCharacteristicThermalCalib->setCallbacks(new ThermCalibrationCallbacks());
     pCharacteristicStrainCalib->setCallbacks(new StrainCalibrationCallbacks());
@@ -155,27 +148,67 @@ pCharacteristicRPMCalib = pService->createCharacteristic(
     Serial.println(connectWiFi(WIFI_CONNECTION_TIMEOUT_MS) ? "WiFi connected" : "WiFi connection failed or timed out.");
 
     Serial.println(syncNTP(NTP_SYNC_TIMEOUT_MS) ? "Time set successfully." : "NTP time synchronization failed or timed out.");
-    Serial.println("Setup finished");
 
+    if (!SPIFFS.begin(true)) {
+        Serial.println("An error occurred while mounting SPIFFS");
+        return;
+    }
+    Serial.println("SPIFFS initialized.");
+    Serial.println("Setup finished");
 }
 
 void loop() {
     unsigned long currentMillis = millis();
-    if (!isTaring && !isRecording) {
-        if (currentMillis - lastReadMillis >= readInterval) {
+    if (!isTaring) {
+        if (!isRecording && (currentMillis - lastNotifyMillis >= notifyInterval)) {
             readAndAverageSensors();
-            lastReadMillis = currentMillis;
-        }
-    
-        if (currentMillis - lastNotifyMillis >= notifyInterval) {
             sendNotifications();
-            printCurrentTime();
             lastNotifyMillis = currentMillis;
         }
+
+        if (isRecording) {
+            readAndAverageSensors();
+        }
     }
-    if (isRecording) {
-        broadcastDataPacket();
-        delay(50);
+    if (Serial.available() > 0) {
+        String command = Serial.readStringUntil('\n');  // read the incoming data as string
+        handleSerialCommand(command);
+    }
+    
+}
+
+void startRecording() {
+    isRecording = true;
+    Serial.println("Recording started");
+
+    // Name the file based on current time
+    time_t now;
+    struct tm timeinfo;
+    time(&now);
+    localtime_r(&now, &timeinfo);
+    String filename = "/" + String(timeinfo.tm_year + 1900) + 
+                      "-" + String(timeinfo.tm_mon + 1) + 
+                      "-" + String(timeinfo.tm_mday) + 
+                      "-" + String(timeinfo.tm_hour) + 
+                      "-" + String(timeinfo.tm_min) + 
+                      "-" + String(timeinfo.tm_sec) + ".csv";
+
+    dataFile = SPIFFS.open(filename, "w");
+    if (!dataFile) {
+        Serial.println("Failed to create file");
+        return;
+    }
+
+    // Add headers to CSV
+    dataFile.println("Timestamp,Torque,Temperature,RPM");
+}
+
+void stopRecording() {
+    isRecording = false;
+    Serial.println("Recording stopped");
+
+    if (dataFile) {
+        dataFile.close();
     }
 }
 
@@ -195,10 +228,18 @@ void readAndAverageSensors() {
   avgStrainGaugeValue = strainGaugeSum / numSamples;
   avgWheelSpeedRadS = wheelSpeedSum / numSamples;
 
-  // Print the averaged sensor values
-  Serial.print("Avg Temperature: "); Serial.println(avgTemperature);
-  Serial.print("Avg Strain Gauge: "); Serial.println(avgStrainGaugeValue);
-  Serial.print("Avg Wheel Speed (Rad/s): "); Serial.println(avgWheelSpeedRadS);
+  // Only print the averaged sensor values if NOT recording
+if (!isRecording) {
+    String timeStr = getCurrentTime();
+    Serial.printf("Values: %s | %.2f°C | %.2f N | %.2f Rad/s\n", 
+                  timeStr.c_str(), 
+                  avgTemperature, 
+                  avgStrainGaugeValue, 
+                  avgWheelSpeedRadS);
+}
+  if (isRecording && dataFile) {
+      dataFile.printf("%lu,%.2f,%.2f,%.2f\n", time(nullptr), avgStrainGaugeValue, avgTemperature, avgWheelSpeedRadS);
+  }
 }
 
 void sendNotifications() {
@@ -329,6 +370,36 @@ void rpm_calibration_callback(uint16_t conn_handle, BLECharacteristic *chr, uint
   }
 }
 
+void handleSerialCommand(String command) {
+    // Handle commands similarly as in the BLE callbacks
+    if (command.startsWith("CALIBRATE:")) {
+        if (command.indexOf("THERM") != -1) {
+            therm_calibration_callback(0, pCharacteristicThermalCalib, (uint8_t*)command.c_str(), command.length());
+        } else if (command.indexOf("STRAIN") != -1) {
+            strain_calibration_callback(0, pCharacteristicStrainCalib, (uint8_t*)command.c_str(), command.length());
+        } else if (command.indexOf("RPM") != -1) {
+            rpm_calibration_callback(0, pCharacteristicRPMCalib, (uint8_t*)command.c_str(), command.length());
+        }
+    } else if (command.startsWith("START_REC")) {
+        startRecording();
+    } else if (command.startsWith("STOP_REC")) {
+        stopRecording();
+    } else if (command == "LIST_FILES") {
+        listFiles();
+    } else if (command.startsWith("READ_FILE:")) {
+        String filename = command.substring(10);  // Get the filename from the command
+        readFile(filename);
+    } else if (command == "TEST_WRITE") {
+    if (dataFile) {
+        dataFile.println("123456,12.34,56.78,90.12");
+        dataFile.flush();  // Ensure it's written
+        Serial.println("Test data written");
+    } else {
+        Serial.println("No file open");
+    }
+}
+}
+
 bool connectWiFi(uint32_t timeout) {
     uint32_t startMillis = millis();
     WiFi.begin(ssid, password);
@@ -347,31 +418,52 @@ bool syncNTP(uint32_t timeout) {
     return time(nullptr) > NTP_REFERENCE_TIMESTAMP;
 }
 
-void printCurrentTime() {
+String getCurrentTime() {
   time_t now;
   struct tm timeinfo;
   
   time(&now); // Get the current time
   localtime_r(&now, &timeinfo); // Convert the time structure
 
-  Serial.printf("Current time: %04d-%02d-%02d %02d:%02d:%02d\n",
-                timeinfo.tm_year + 1900,
-                timeinfo.tm_mon + 1,
-                timeinfo.tm_mday,
+  char buffer[9]; // HH:MM:SS\0
+  snprintf(buffer, sizeof(buffer), "%02d:%02d:%02d",
                 timeinfo.tm_hour,
                 timeinfo.tm_min,
                 timeinfo.tm_sec);
+
+  return String(buffer);
 }
 
-void broadcastDataPacket() {
-    DataPacket packet;
+void listFiles() {
+    File root = SPIFFS.open("/");
+    File file = root.openNextFile();
     
-    packet.timestamp = time(nullptr); // Current time
-    packet.torque = strainGaugeSensor.read(); // Assuming a readValue function or similar
-    packet.temperature = temperatureSensor.readTemperature();
-    packet.rpm = hallSensor.readSpeedRadS();
-
-    pCharacteristicDataPacket->setValue((uint8_t*)&packet, sizeof(packet));
-    pCharacteristicDataPacket->notify();
+    while (file) {
+        if (String(file.name()).endsWith(".csv")) {
+            Serial.println(file.name());
+        }
+        file = root.openNextFile();
+    }
 }
+
+void readFile(String filename) {
+    if (!SPIFFS.exists("/" + filename)) {
+        Serial.println("File not found");
+        return;
+    }
+
+    File file = SPIFFS.open("/" + filename, "r");
+    if (!file) {
+        Serial.println("Failed to open file");
+        return;
+    }
+
+    while (file.available()) {
+        Serial.write(file.read());
+    }
+
+    file.close();
+}
+
+
 
