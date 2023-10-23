@@ -341,13 +341,13 @@ void rpm_calibration_callback(uint16_t conn_handle, BLECharacteristic *chr, uint
 
   // Handle Start Recording command
   if (command.startsWith("START_REC")) {
-    isRecording = true;
+    startRecording();
     Serial.println("Recording started");
     chr->setValue((uint8_t*)"Recording started", 17);
 
   // Handle Stop Recording command
   } else if (command.startsWith("STOP_REC")) {
-    isRecording = false;
+    stopRecording();
     Serial.println("Recording stopped");
     chr->setValue((uint8_t*)"Recording stopped", 17);
 
