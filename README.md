@@ -111,3 +111,45 @@ Continuous Monitoring: The system continues to monitor and process sensor data, 
 
 The system connects to a Wi-Fi network for NTP time synchronization, which is crucial for timestamping the recorded data.
 
+
+## BLE App
+
+For using the BLE functionalities a generic BLE app widely available for Android and iOS alike will do the job. A app specifically for controlling this sensor was developed and the source code is provided within this github.
+
+To build and run the BLE app, you'll need to set up your development environment. Ensure you have the following:
+
+Flutter SDK: Install the latest version of the Flutter SDK from the Flutter website.
+Visual Studio Code (VSCode): Install VSCode from the official website.
+Running the App in VSCode
+Clone the Repository: Clone this GitHub repository to your local machine.
+
+Open the Project in VSCode: Start VSCode, select 'File > Open Folder', and navigate to the cloned repository folder.
+
+Install Dependencies: Open a terminal in VSCode (View > Terminal) and run the command flutter pub get in the project's root directory. This command installs all the necessary Flutter dependencies.
+
+Set Up a Device or Emulator: Connect a physical device (android devices with USB Debugging enabled) via USB or set up an emulator to run the app. Ensure your device/emulator has Bluetooth capabilities for BLE functionality.
+
+Run the App: Use flutter devices to check for all available devices. Use the command flutter run in the VSCode terminal to build and run the app on your connected device or emulator. Since flutter is crossplatform compatible it can even be run in a browser.
+
+
+## Data Analysis
+
+The generated data present in a .csv file can be transfered to a computer and be analysed with the provided Jupyter Notebook. Google Colab is a powerful platform to execute Python code in form of a Jupyter Notebook. 
+Here is a short guide how to set up the data analysis:
+
+Access Google Colab: Visit Google Colab and sign in with a Google account.
+
+Upload the Notebook: In Colab, go to 'File > Upload notebook' and select the provided Jupyter Notebook file.
+
+Upload Data Files:
+
+Use the file explorer (folder icon in the left sidebar) to upload your GPX and CSV files.
+Make sure the file paths in the notebook match the uploaded files.
+Install Libraries: Execute !pip install cells to install required Python libraries.
+
+Run the Notebook: Run each cell sequentially using 'Shift + Enter' or the play button on the cell.
+
+Analyze and Visualize Data: Follow the notebook steps to synchronize your data and perform analysis. 
+
+Important Note
+Google Colab sessions are temporary. If you disconnect or close the tab, you'll need to re-upload files and rerun the notebook upon your return.
