@@ -1,4 +1,4 @@
-# OpenBrakes Sensor Suite
+# OpenBrakes Instructions
 
 This Arduino project, named 'OpenBrakes', is designed to interface with various sensors including a strain gauge, temperature sensor, and a hall effect sensor for RPM measurement. The project includes features for calibration, data recording, and BLE (Bluetooth Low Energy) communication for data transmission.
 
