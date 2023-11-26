@@ -111,27 +111,3 @@ Continuous Monitoring: The system continues to monitor and process sensor data, 
 
 The system connects to a Wi-Fi network for NTP time synchronization, which is crucial for timestamping the recorded data.
 
-## Built With
-
-- Arduino IDE
-- C/C++ (Arduino programming language)
-- ESP32 (or any other BLE compatible Arduino board)
-- Various sensors (strain gauge, temperature sensor, hall effect sensor)
-
-## Contributing
-
-Contributions to 'OpenBrakes' are welcome. Please read [CONTRIBUTING.md](LINK_TO_CONTRIBUTING.MD) for details on our code of conduct, and the process for submitting pull requests.
-
-## Authors
-
-* **[Your Name]** - *Initial work* - [Your GitHub Profile](LINK_TO_YOUR_PROFILE)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE_LINK) file for details
-
-## Acknowledgments
-
-* Acknowledge any libraries or resources you used.
-* Inspiration, if any.
-* etc.
